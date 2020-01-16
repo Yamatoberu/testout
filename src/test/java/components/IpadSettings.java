@@ -2,35 +2,34 @@ package components;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import testsuite.TS01LogEnableSSLConnectWifi;
+import utilities.Waiter;
 
-import java.util.concurrent.TimeUnit;
-
-import static testsuite.TS01LogEnableSSLConnectWifi.logger;
-import static testsuite.TS01LogEnableSSLConnectWifi.driver;
+import static utilities.WebDriverSetup.driver;
 
 public class IpadSettings {
     // Inventory of objects
-       public static By mailContactsCalendars = By.id("siMailContactsCalendars.Grid.tbText"); // Mail Contacts and Calendars
-       public static By wifi = By.id("rectClickArea"); // Wifi
+    public static By mailContactsCalendars = By.id("siMailContactsCalendars.Grid.tbText"); // Mail Contacts and Calendars
+    public static By wifi = By.id("rectClickArea"); // Wifi
+    public static By emailAccount = By.id("siAccount.Grid.tbStateText");
+    public static By accountMaggieBrown = By.id("lbAccounts.Grid.Border.ScrollViewer.Grid.Viewport.ScrollContentPresenter.OuterElement.InnerElement.ItemsPresenter.StackPanel.SettingsItemSubMenu.Grid.ContentPresenter.StackPanel.TextBlock");
 
-    public static void goToMailContactCalendars(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement mailContactCalButton = driver.findElement(mailContactsCalendars);
-        mailContactCalButton.click();
+    public static void goToMailContactCalendars() {
+        Waiter.waiting(1);
+        driver.findElement(mailContactsCalendars).click();
     }
 
-    public static void goToWifi(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement wifiButton = driver.findElement(wifi);
-        wifiButton.click();
+    public static void goToWifi() {
+        Waiter.waiting(1);
+        driver.findElement(wifi).click();
+    }
+
+    public static void clickMaggieBrown(){
+        Waiter.waiting(1);
+        driver.findElement(accountMaggieBrown).click();
+    }
+
+    public static void clickGmailAccount(){
+        Waiter.waiting(1);
+        driver.findElement(emailAccount).click();
     }
 }

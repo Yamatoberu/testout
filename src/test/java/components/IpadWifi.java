@@ -2,8 +2,9 @@ package components;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import utilities.Waiter;
 
-import static testsuite.TS01LogEnableSSLConnectWifi.driver;
+import static utilities.WebDriverSetup.driver;
 import static testsuite.TS01LogEnableSSLConnectWifi.prop;
 
 public class IpadWifi {
@@ -13,19 +14,13 @@ public class IpadWifi {
         public static By join = By.id("btnJoin.grid.contentPresenter.TextBlock"); // Join button
 
     public static void connectToCorpnetNetwork(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement network = driver.findElement(corpnetNetwork);
-        network.click();
+        Waiter.waiting(1);
+        driver.findElement(corpnetNetwork).click();
 
         WebElement passwordInput = driver.findElement(password);
         passwordInput.clear();
         passwordInput.sendKeys(prop.getProperty("wifi.password"));
 
-        WebElement joinButton = driver.findElement(join);
-        joinButton.click();
+        driver.findElement(join).click();
     }
 }

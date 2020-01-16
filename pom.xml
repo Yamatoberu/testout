@@ -34,6 +34,12 @@
             <artifactId>selenium-chrome-driver</artifactId>
             <version>3.141.59</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>3.8.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
     <build>

@@ -2,10 +2,8 @@ package testsuite;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import components.*;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -14,11 +12,10 @@ import utilities.SetupFromConfigFile;
 import utilities.WebDriverSetup;
 
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
+import static utilities.WebDriverSetup.driver;
 
 public class TS01LogEnableSSLConnectWifi {
 
-    public static WebDriver driver;
     public static ExtentReports extentReports;
     public static ExtentTest logger;
     public static Properties prop;
@@ -28,9 +25,8 @@ public class TS01LogEnableSSLConnectWifi {
     public void testSuiteSetup() {
         SetupFromConfigFile config = new SetupFromConfigFile();
         prop = config.retrieveProperties();
-
-        WebDriverSetup setup = new WebDriverSetup(prop);
-        driver = setup.setupWebDrivers(driver);
+        WebDriverSetup setup = new WebDriverSetup();
+        setup.setupWebDrivers(prop);
 
         wait = new WebDriverWait(driver, 20);
 
@@ -45,19 +41,17 @@ public class TS01LogEnableSSLConnectWifi {
         driver.manage().window().maximize();
         // Navigate to the simulation URL
         driver.get(prop.getProperty("url"));
-        // Setting up the SSL and verifying port
+        // Opening the account window
         IpadHomePage.clickSettingsApp();
         IpadSettings.goToMailContactCalendars();
-        IpadMailContactsCalendars.clickMaggieBrown();
-        IpadMailContactsCalendars.clickGmailAccount();
-        IpadAccountPopup.clickAdvancedButton();
-        IpadAccountPopup.activateSSL();
-        IpadAccountPopup.validatePort();
-        IpadAccountPopup.clickAccount();
-        IpadAccountPopup.clickDone();
+        IpadSettings.clickMaggieBrown();
+        IpadSettings.clickGmailAccount();
+        // Turning on SSL and validating port
+        IpadAccountPopup.proceedSetSSLAndValidatePort();
         // Connecting to Corpnet Network
         IpadSettings.goToWifi();
         IpadWifi.connectToCorpnetNetwork();
+        // Finishing lab and validating the score
         BasePage.finishLab();
         LabReportPopup.validateScore();
         LabReportPopup.clickDone();

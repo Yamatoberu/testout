@@ -3,7 +3,9 @@ package components;
 import com.aventstack.extentreports.Status;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import utilities.Waiter;
+
+import static utilities.WebDriverSetup.driver;
 
 import static testsuite.TS01LogEnableSSLConnectWifi.*;
 
@@ -15,15 +17,10 @@ public class LabReportPopup {
         public static String parentWindow;
 
     public static void validateScore(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Waiter.waiting(1);
         parentWindow = driver.getWindowHandle();
         driver.switchTo().frame(driver.findElement(iframe));
-        WebElement score = driver.findElement(yourScore);
-        String scoreText = score.getText();
+        String scoreText = driver.findElement(yourScore).getText();
         if (scoreText.contains("100%")){
             logger.log(Status.PASS, "Lab completion at 100%");
         } else {
@@ -32,13 +29,8 @@ public class LabReportPopup {
     }
 
     public static void clickDone(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Waiter.waiting(1);
         driver.switchTo().window(parentWindow);
-        WebElement doneButton = driver.findElement(done);
-        doneButton.click();
+        driver.findElement(done).click();
     }
 }

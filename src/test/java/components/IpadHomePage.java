@@ -3,7 +3,9 @@ package components;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import testsuite.TS01LogEnableSSLConnectWifi;
+import utilities.Waiter;
+
+import static utilities.WebDriverSetup.driver;
 
 import static testsuite.TS01LogEnableSSLConnectWifi.*;
 
@@ -13,11 +15,7 @@ public class IpadHomePage {
 
     public static void clickSettingsApp(){
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(settingsAppButton));
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Waiter.waiting(1);
         driver.findElement(settingsAppButton).click();
     }
 }

@@ -5,11 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import testsuite.TS01LogEnableSSLConnectWifi;
+import utilities.Waiter;
 
 import java.util.concurrent.TimeUnit;
 
 import static testsuite.TS01LogEnableSSLConnectWifi.logger;
-import static testsuite.TS01LogEnableSSLConnectWifi.driver;
+import static utilities.WebDriverSetup.driver;
 
 public class IpadAccountPopup {
     // Inventory of objects
@@ -25,22 +26,13 @@ public class IpadAccountPopup {
         public static By done = By.id("btnDone.grid.contentPresenter.TextBlock");
 
         public static void clickAdvancedButton(){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            WebElement advancedButton = driver.findElement(advanced);
-            advancedButton.click();
+            Waiter.waiting(1);
+            driver.findElement(advanced).click();
         }
 
         public static void activateSSL(){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Actions actions = new Actions(TS01LogEnableSSLConnectWifi.driver);
+            Waiter.waiting(1);
+            Actions actions = new Actions(driver);
             WebElement sslSlider = driver.findElement(sslFrom);
             int xOffset = sslSlider.getLocation().getX();
             int yOffset = sslSlider.getLocation().getY();
@@ -48,13 +40,8 @@ public class IpadAccountPopup {
         }
 
         public static void validatePort(){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            WebElement serverPortTextBox = driver.findElement(serverPort);
-            String port = serverPortTextBox.getAttribute("value");
+            Waiter.waiting(1);
+            String port = driver.findElement(serverPort).getAttribute("value");
             if (port.equals("993")){
                 logger.log(Status.PASS, "Port equals '993'");
             } else {
@@ -63,22 +50,20 @@ public class IpadAccountPopup {
         }
 
         public static void clickAccount(){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            WebElement accountButton = driver.findElement(account);
-            accountButton.click();
+            Waiter.waiting(1);
+            driver.findElement(account).click();
         }
 
         public static void clickDone(){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            WebElement doneButton = driver.findElement(done);
-            doneButton.click();
+            Waiter.waiting(1);
+            driver.findElement(done).click();
+        }
+
+        public static void proceedSetSSLAndValidatePort(){
+            IpadAccountPopup.clickAdvancedButton();
+            IpadAccountPopup.activateSSL();
+            IpadAccountPopup.validatePort();
+            IpadAccountPopup.clickAccount();
+            IpadAccountPopup.clickDone();
         }
 }
